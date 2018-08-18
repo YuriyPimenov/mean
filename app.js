@@ -1,4 +1,5 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const authRouter = require('./routes/auth')
 const analyticsRouter = require('./routes/analytics')
@@ -7,6 +8,12 @@ const positionRouter = require('./routes/position')
 const categoryRouter = require('./routes/category')
 
 const app = express()
+
+const keys = require('./config/keys')
+mongoose.connect(keys.mongoURI)
+    .then(()=>console.log('MongoDB connected!!!'))
+    .catch(error=>console.log(error))
+
 //Красиво обрабатывать и показывает в консоле рез-ты запрсов к api
 app.use(require('morgan')('dev'))
 //Для обработки запросов к api
