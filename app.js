@@ -7,10 +7,13 @@ const positionRouter = require('./routes/position')
 const categoryRouter = require('./routes/category')
 
 const app = express()
-
+//Красиво обрабатывать и показывает в консоле рез-ты запрсов к api
+app.use(require('morgan')('dev'))
 //Для обработки запросов к api
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
+//Возможность обрабатывать запросы с других доменов
+app.use(require('cors')())
 
 app.use('/api/auth', authRouter)
 app.use('/api/analytics', analyticsRouter)
