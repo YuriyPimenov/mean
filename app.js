@@ -21,6 +21,8 @@ require('./middleware/passport')(passport)
 
 //Красиво обрабатывать и показывает в консоле рез-ты запрсов к api
 app.use(require('morgan')('dev'))
+//Делаем папку с картинками статичной
+app.use('/uploads', express.static('uploads'))
 //Для обработки запросов к api
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())

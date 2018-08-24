@@ -32,23 +32,32 @@ module.exports.remove = async (req,res)=>{
     }
 }
 module.exports.create = async (req,res)=>{
+    const category = new Category({
+        name: req.body.name,
+        user: req.user.id,
+        imageSrc: req.file ? req.file.path : ''
+    })
     try{
-        const positions = await Position.find({
-            category: req.params.categoryId,
-            user: req.user.id//user берётся из passport
-        })
-        res.status(200).json(positions)
+        await category.save()
+        res.status(201).json(category)
     }catch(e){
         errorHandler(res, e)
     }
 }
 module.exports.update =async (req,res)=>{
+    const updated = {
+        name: req.body.name
+    }
+    if(req.file)
+        updated.imageSrc = req.file.path
+        
     try{
-        const positions = await Position.find({
-            category: req.params.categoryId,
-            user: req.user.id//user берётся из passport
-        })
-        res.status(200).json(positions)
+        const category = await Category.findOneAndUpdate(
+            {_id: req.params.id},
+            {$set: updated},
+            {new: true}
+        )
+        res.status(200).json(category)
     }catch(e){
         errorHandler(res, e)
     }
