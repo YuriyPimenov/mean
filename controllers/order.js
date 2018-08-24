@@ -48,7 +48,7 @@ module.exports.create = async (req,res)=>{
             list: req.body.list,
             user: req.user.id,
             order: maxOrder + 1
-        })save()
+        }).save()
         res.status(201).json(order)
     }catch(e){
         errorHandler(res, e)
